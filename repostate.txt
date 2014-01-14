@@ -1,0 +1,4 @@
+87f0213 cgminer
+e66e6d5 p2pool
+ce9c268 p2pool-frontend
+90e7bff p2pool-gui

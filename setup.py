@@ -4,28 +4,21 @@
 
 import os
 import sys
-import subprocess
 
-repo = None
-
-def run(cmdline):
-    if repo:
-        dispatch.dispatch(dispatch.request(cmdline))
-    else:
-        subprocess.check_call(['git'] + cmdline, shell=False)
+try:
+    import sh as pbs
+except ImportError:
+    import pbs
 
 repolist = {}
 for line in open('repolist.txt', 'rb').readlines():
     line = line.strip()
-    print line
     name, url = line.split(" = ")
+    print 'Checking out ' + name + ' from ' + url
     repolist[name] = url
+    git = pbs.git.bake(_cwd='./')
     if not os.path.isdir(name):
-        run(['clone', url, name])
-
-if not repo:
-    print 'Initial clones completed, exiting.'
-    sys.exit(0)
+        git.clone(url, name)
 
 repostates = {}
 for line in open('repostate.txt', 'rb').readlines():
@@ -35,8 +28,8 @@ for line in open('repostate.txt', 'rb').readlines():
 
 writefile = len(repolist) != len(repostates)
 for name, url in repolist.iteritems():
-    repo = hg.repository(ui.ui(), path=name)
-    hash = repo['.'].hex()
+    git = pbs.git.bake(_cwd=name)
+    hash = git('rev-parse', '--short', 'HEAD').rstrip()
     if hash != repostates.get(name):
         print name, 'has changed'
         repostates[name] = hash
