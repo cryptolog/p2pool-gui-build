@@ -1,4 +1,4 @@
-87f0213 cgminer
-e66e6d5 p2pool
-ce9c268 p2pool-frontend
-90e7bff p2pool-gui
+87f0213112a3c69e2c55160b9c674b9de2cde996 cgminer
+e66e6d54784393d7bc22b1429c32ce1d2a58da8b p2pool
+ce9c268e4f0a9c73a8b7f16afd93db99d705b5ae p2pool-frontend
+90e7bff774305b68d0ac7b63db456665389e8ce2 p2pool-gui

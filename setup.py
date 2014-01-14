@@ -4,11 +4,7 @@
 
 import os
 import sys
-
-try:
-    import sh as pbs
-except ImportError:
-    import pbs
+import git
 
 repolist = {}
 for line in open('repolist.txt', 'rb').readlines():
@@ -16,9 +12,9 @@ for line in open('repolist.txt', 'rb').readlines():
     name, url = line.split(" = ")
     print 'Checking out ' + name + ' from ' + url
     repolist[name] = url
-    git = pbs.git.bake(_cwd='./')
+    repo = git.Repo('./')
     if not os.path.isdir(name):
-        git.clone(url, name)
+        repo.git.clone(url, name)
 
 repostates = {}
 for line in open('repostate.txt', 'rb').readlines():
@@ -28,8 +24,8 @@ for line in open('repostate.txt', 'rb').readlines():
 
 writefile = len(repolist) != len(repostates)
 for name, url in repolist.iteritems():
-    git = pbs.git.bake(_cwd=name)
-    hash = git('rev-parse', '--short', 'HEAD').rstrip()
+    repo = git.Repo(name)
+    hash = str(repo.rev_parse('HEAD'))
     if hash != repostates.get(name):
         print name, 'has changed'
         repostates[name] = hash
