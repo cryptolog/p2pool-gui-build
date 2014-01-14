@@ -1,0 +1,4 @@
+p2pool = https://github.com/forrestv/p2pool
+p2pool-frontend = https://github.com/hardcpp/P2PoolExtendedFrontEnd
+cgminer = https://github.com/ckolivas/cgminer
+p2pool-gui = https://github.com/Rooke/p2pool-gui.git
